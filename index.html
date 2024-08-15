@@ -1,12 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Test Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #1e1e1e; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .calculator {
+            display: inline-block;
+            border: 1px solid #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px #000000;
+            background-image: url('imagem.png'); 
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: darken; 
+            background-color: #000000af; 
+        }
+        input, button {
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ffffff;
+            color: #000000;
+            cursor: pointer;
+            font-weight: bold; 
+        }
+        button:hover {
+            background-color: #ffffff;
+        }
+        button:active {
+            background-color: #ffffff;
+        }
+        #display {
+            width: calc(60px * 4 + 20px);
+            font-size: 28px;
+            text-align: right;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ffffff;
+            background-color: #ffffff;
+            margin-bottom: 10px;
+            font-weight: bold; 
+        }
+        #log {
+            margin-top: 20px;
+            text-align: left;
+            border-top: 1px solid #ffffff;
+            padding-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: #ffffff;
+            border-radius: 5px;
+            font-weight: bold; 
+        }
+        .log-item {
+            padding: 8px;
+            border-bottom: 1px solid #ffffff;
+            font-weight: bold; 
+        }
+        h1 {
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-weight: bold; 
+        }
+        h2 {
+            color: #000000;
+            font-size: 18px;
+            font-weight: bold; 
+        }
+    </style>
 </head>
 <body>
-  <h1>Hello, Vercel!</h1>
-  <p>If you see this page, your deployment is working. certo2</p>
+    <div>
+        <h1>Calculadora</h1>
+        <div class="calculator">
+            <input id="display" type="text" disabled>
+            <br>
+            <button onclick="clearDisplay()">C</button>
+            <button onclick="appendNumber('1')">1</button>
+            <button onclick="appendNumber('2')">2</button>
+            <button onclick="appendNumber('3')">3</button>
+            <br>
+            <button onclick="appendNumber('4')">4</button>
+            <button onclick="appendNumber('5')">5</button>
+            <button onclick="appendNumber('6')">6</button>
+            <button onclick="appendNumber('7')">7</button>
+            <br>
+            <button onclick="appendNumber('8')">8</button>
+            <button onclick="appendNumber('9')">9</button>
+            <button onclick="appendNumber('0')">0</button>
+            <button onclick="calculate()">=</button>
+            <br>
+            <button onclick="appendOperator('+')">+</button>
+            <button onclick="appendOperator('-')">-</button>
+            <button onclick="appendOperator('*')">*</button>
+            <button onclick="appendOperator('/')">/</button>
+        </div>
+
+        <div id="log">
+            <h2>Histórico</h2>
+        </div>
+    </div>
+
+    <script>
+        let display = document.getElementById('display');
+        let log = document.getElementById('log');
+
+        function appendNumber(number) {
+            display.value += number;
+        }
+
+        function appendOperator(operator) {
+            display.value += ' ' + operator + ' ';
+        }
+
+        function clearDisplay() {
+            display.value = '';
+        }
+
+        function calculate() {
+            try {
+                let result = eval(display.value);
+                logOperation(display.value + ' = ' + result);
+                display.value = result;
+            } catch (error) {
+                display.value = 'Error';
+            }
+        }
+
+        function logOperation(operation) {
+            let logItem = document.createElement('div');
+            logItem.classList.add('log-item');
+            logItem.textContent = operation;
+            log.appendChild(logItem);
+            log.scrollTop = log.scrollHeight; 
+        }
+    </script>
 </body>
 </html>
